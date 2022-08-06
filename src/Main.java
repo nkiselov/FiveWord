@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
         BufferedReader br = new BufferedReader(new FileReader(new File("words_alpha.txt")));
         List<String> words = new ArrayList<>();
         String line;
@@ -34,8 +33,11 @@ public class Main {
 
         System.out.println("Search started");
         Solution sol = new Solution();
+        long start = System.currentTimeMillis();
         List<List<Integer>> igroups = sol.compute(iwords);
         System.out.println("Search finished");
+        long time = System.currentTimeMillis()-start;
+        System.out.println(igroups.size()+" results in "+String.format("%.2f",time/1000.0)+" s");
 
         String[][] groups = new String[igroups.size()][];
         for(int i=0; i<groups.length; i++){
@@ -44,9 +46,6 @@ public class Main {
                 groups[i][j] = words.get(igroups.get(i).get(j));
             }
         }
-
-        long time = System.currentTimeMillis()-start;
-        System.out.println(groups.length+" results in "+String.format("%.2f",time/1000.0)+" s");
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File("result.txt")));
         for(String[] group:groups){
